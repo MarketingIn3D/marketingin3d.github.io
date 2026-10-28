@@ -43,11 +43,10 @@
         </div>
 
         <div class="funnel" role="img" aria-label="A marketing funnel made of three frosted glass layers: attention, interest, action.">
-          <div class="funnel-stage">
-            <div class="slab slab-1"></div>
-            <div class="slab slab-2"></div>
-            <div class="slab slab-3"></div>
-          </div>
+          <video class="funnel-video" autoplay muted loop playsinline poster="media/funnel-poster.jpg" aria-hidden="true">
+            <source src="media/funnel.webm" type="video/webm">
+            <source src="media/funnel.mp4" type="video/mp4">
+          </video>
           <span class="funnel-label l1">Attention</span>
           <span class="funnel-label l2">Interest</span>
           <span class="funnel-label l3">Action</span>
@@ -116,5 +115,19 @@
       </nav>
     </div>
   </footer>
+  <script>
+    // Respect reduced motion: stop the hero loop and keep its first frame (the poster).
+    (function () {
+      var video = document.querySelector(".funnel-video");
+      var query = window.matchMedia("(prefers-reduced-motion: reduce)");
+      function apply() {
+        if (!video) return;
+        if (query.matches) { video.pause(); video.removeAttribute("autoplay"); video.currentTime = 0; }
+        else { video.play().catch(function () {}); }
+      }
+      apply();
+      if (query.addEventListener) query.addEventListener("change", apply);
+    })();
+  </script>
 </body>
 </html>

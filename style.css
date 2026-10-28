@@ -86,45 +86,22 @@ h3 { font-size: 20px; letter-spacing: -0.01em; line-height: 1.25; }
 .hero { overflow: clip; padding: clamp(32px, 7vw, 96px) 0 clamp(56px, 9vw, 120px); }
 .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
 
-/* Signature: a funnel built from frosted-glass slabs, lit like our videos. */
-.funnel { position: relative; aspect-ratio: 1 / 1.05; perspective: 1100px; }
-.funnel-stage {
-  position: absolute; inset: 0; transform-style: preserve-3d;
-  transform: rotateX(52deg) rotateZ(-34deg);
-  animation: drift 14s ease-in-out infinite alternate;
+/* Signature: the marketing funnel as a looping 3D render (renderer scene site-funnel), its edges fade into --bg. */
+.funnel { position: relative; aspect-ratio: 1 / 1.05; }
+.funnel-video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; background: var(--bg);
 }
-.slab {
-  position: absolute; left: 50%; top: 50%;
-  width: var(--w); height: var(--w);
-  margin: calc(var(--w) / -2) 0 0 calc(var(--w) / -2);
-  transform: translateZ(var(--z));
-  border-radius: 26%;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03));
-  border: 1px solid var(--glass-edge);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset, 0 30px 60px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-}
-.slab::after { /* glowing rim */
-  content: ""; position: absolute; inset: -1px; border-radius: inherit;
-  border: 2px solid var(--rim); opacity: 0.75;
-  box-shadow: 0 0 24px var(--rim), 0 0 2px var(--rim) inset;
-}
-.slab-1 { --w: 74%; --z: 150px; --rim: rgba(139, 108, 255, 0.8); }
-.slab-2 { --w: 54%; --z: 40px;  --rim: rgba(94, 231, 255, 0.8); }
-.slab-3 { --w: 34%; --z: -70px; --rim: rgba(255, 138, 76, 0.95); }
 .funnel-label {
   position: absolute; right: 0; font-size: 12px; font-weight: 600;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
   display: flex; align-items: center; gap: 10px;
+  text-shadow: 0 0 10px var(--bg), 0 0 4px var(--bg); /* stays readable where a slab passes behind it */
 }
 .funnel-label::before { content: ""; width: 28px; height: 1px; background: currentColor; opacity: 0.6; }
 .funnel-label.l1 { top: 14%; }
 .funnel-label.l2 { top: 44%; }
 .funnel-label.l3 { top: 72%; color: var(--accent); }
-@keyframes drift {
-  from { transform: rotateX(54deg) rotateZ(-40deg) translateY(-6px); }
-  to   { transform: rotateX(50deg) rotateZ(-28deg) translateY(6px); }
-}
 
 /* Glass panels */
 .panel {
@@ -176,6 +153,5 @@ section.block { padding: clamp(48px, 7vw, 96px) 0; border-top: 1px solid rgba(25
   .brand-mark { width: 24px; height: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .funnel-stage { animation: none; }
   .button { transition: none; }
 }
